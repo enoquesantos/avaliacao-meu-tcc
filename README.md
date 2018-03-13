@@ -1,6 +1,6 @@
-# avaliacao-tcc
+# Avaliação do meu TCC
 ### Implementação para avaliação utilizando as seguintes features:
-    - Login do usuário (inclue o logout)
+    - Login do usuário (inclui o logout)
     - Visualização e envio de mensagens usando o perfil 'Professor'
     - Visualização e Edição do perfil do usuário com permissão 'Professor'
 
