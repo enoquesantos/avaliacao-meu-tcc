@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>default_user_profile.svg</file>
+        <file>drawer.jpg</file>
+        <file>eula.html</file>
+        <file>icon.png</file>
+        <file>qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>

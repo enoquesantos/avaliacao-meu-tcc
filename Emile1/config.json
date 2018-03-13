@@ -1,0 +1,35 @@
+{
+    "applicationName": "Emile",
+    "organizationName": "Emile1",
+    "organizationDomain": "qt.project.example.emile1",
+    "applicationStyle": "Material",
+    "forceEulaAgreement": false,
+    "hasLogin": true,
+    "showEula": false,
+    "showTabButtonText": true,
+    "usesSwipeView": false,
+    "usesDrawer": true,
+    "showDrawerImage": true,
+    "restService": {
+        "userName": "apirest",
+        "userPass": "1q2w3e4r5t6y",
+        "baseUrl": "http://enoque.pythonanywhere.com"
+    },
+    "fontSize": {
+        "small": 10,
+        "normal": 12,
+        "large": 16,
+        "extraLarge": 24
+    },
+    "theme": {
+        "colorAccent": "#91ff44",
+        "colorPrimary": "#2c576c",
+        "colorControl": "#2c3f49",
+        "colorControlHighlight": "#729846",
+        "textColorPrimary": "#3b3b3b",
+        "menuBackgroundColor": "yellow",
+        "pageBackgroundColor": "#fafafa",
+        "toolTipBackgroundColor": "#323232"
+    },
+    "events": []
+}

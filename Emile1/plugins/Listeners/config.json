@@ -1,0 +1,6 @@
+{
+    "pages": [],
+    "listeners": [
+        "UpdateUserProfileImage.qml"
+    ]
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <!-- public components used by plugins -->
+    <qresource prefix="publicComponentes">
+        <file>AwesomeIcon.qml</file>
+        <file>BasePage.qml</file>
+        <file>CameraCapture.qml</file>
+        <file>CustomListView.qml</file>
+        <file>Datepicker.qml</file>
+        <file>ListItem.qml</file>
+        <file>PasswordField.qml</file>
+        <file>PhotoSelection.qml</file>
+        <file>RoundedImage.qml</file>
+        <file>TimePicker.qml</file>
+    </qresource>
+</RCC>

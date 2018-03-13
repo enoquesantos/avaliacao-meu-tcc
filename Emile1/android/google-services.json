@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "628313397417",
+    "firebase_url": "https://emile-web-validar-tcc.firebaseio.com",
+    "project_id": "emile-web-validar-tcc",
+    "storage_bucket": "emile-web-validar-tcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628313397417:android:e8fe30af68097084",
+        "android_client_info": {
+          "package_name": "qt.project.example.emile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628313397417-h6n8bp3je8eas32spp33udinpv4d28mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOOh1Vd-PcuubmO-k1w1COEZ_n_mMSyxs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
