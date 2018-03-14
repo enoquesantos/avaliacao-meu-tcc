@@ -1,8 +1,16 @@
 # Avaliação do meu TCC
 ### Implementação para avaliação utilizando as seguintes features:
-    - Login do usuário (inclui o logout)
-    - Visualização e envio de mensagens usando o perfil 'Professor'
+    - Login do usuário
+        - Inclui o logout e recuperação de senha
+        - Inclui salvar o json contendo os dados do usuário pelo serviço REST
+    - Visualização de mensagens com perfil aluno ou professor
+        - A definição do perfil do usuário será feita mediante json enviado pelo webservice
+        - As páginas devem ser exibidas a partir do perfil do usuário (teacher ou student)
+    - Envio de mensagens usando o perfil 'Professor'
+        - Inclui seleção de destinatário: turma específica ou todos os alunos
+        - Ao selecionar uma turma específica, inclui escolha de uma turma
     - Visualização e Edição do perfil do usuário com permissão 'Professor'
+        - Inclui apenas edição dos campos email e senha
 
 #### Alterações realizadas na versão com o framework:
     Realizado o clone do projeto da arquitetura para o computador que será utilizado
