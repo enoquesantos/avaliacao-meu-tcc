@@ -11,6 +11,10 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationName(QStringLiteral("Emile2"));
     QApplication::setOrganizationDomain(QStringLiteral("org.qtproject.emile2"));
     QApplication app(argc, argv);
+
+    // register the Awesome icon font loader as QML singleton type
+    qmlRegisterSingletonType(QUrl(QLatin1String("qrc:/AwesomeIconFontLoader.qml")), "Qt.project.AwesomeIconFontLoader", 1, 0, "IconFontLoaderSingleton");
+
     app.setWindowIcon(QIcon::fromTheme(":/assets/app_icon.png"));
 
     QQmlApplicationEngine engine;

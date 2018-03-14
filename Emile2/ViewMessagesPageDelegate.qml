@@ -2,6 +2,7 @@ import QtQuick 2.8
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: delegate
@@ -25,25 +26,26 @@ Rectangle {
     RowLayout {
         id: topRow
         spacing: 0; z: 1
-        height: 13
+        height: 15
         anchors {
             top: parent.top; topMargin: 5
-            left: parent.left; leftMargin: 10
-            right: parent.right; rightMargin: 10
+            left: parent.left; leftMargin: 8
+            right: parent.right; rightMargin: 8
         }
 
-        Image {
-            width: 16; height: width
-            source: "qrc:/assets/%1.svg".arg(fromCurrentUser ? "chevron_right" : "message")
-            anchors { top: parent.top; topMargin: 0 }
+        AwesomeIcon {
+            size: authorLabel.font.pointSize
+            name: fromCurrentUser ? "arrow_right" : "commenting"
+            color: dateLabel.color; clickEnabled: false
+            anchors { top: parent.top; topMargin: 2 }
         }
 
         Text {
             id: authorLabel
-            color: labelMessage.color
+            color: dateLabel.color
             font.pointSize: 9
             anchors.verticalCenter: parent.verticalCenter
-            text: fromCurrentUser ? qsTr("You") : getSenderName(sender.name)
+            text: fromCurrentUser ? qsTr("You") : window.getPrettyUserName(sender.name)
         }
 
         Text {
@@ -78,34 +80,33 @@ Rectangle {
 
     RowLayout {
         id: bottomRow
-        spacing: 1; z: 1
-        height: 13
+        height: 13; spacing: 5; z: 1
         anchors {
             bottom: parent.bottom; bottomMargin: 7
-            right: parent.right; rightMargin: 10
+            right: parent.right; rightMargin: 8
         }
 
-        Image {
-            width: 12; height: width
-            source: "qrc:/assets/date_range.svg"
+        AwesomeIcon {
+            size: dateLabel.font.pointSize-1; name: "calendar"
             visible: dateLabel.text.length > 0
-            anchors { top: parent.top; topMargin: 0 }
+            color: dateLabel.color; clickEnabled: false
+            anchors { top: parent.top; topMargin: 2 }
         }
 
         Text {
             id: dateLabel
             text: Qt.formatDateTime(date, "dd/MM/yyyy")
-            font.pointSize: 9; color: "#888"
+            font.pointSize: 9; color: "#555"
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Item { width: 8; height: parent.height }
 
-        Image {
-            width: 12; height: width
-            source: "qrc:/assets/access_time.svg"
+        AwesomeIcon {
+            size: dateLabel.font.pointSize; name: "clock_o"
             visible: timeLabel.text.length > 0
-            anchors { top: parent.top; topMargin: 0 }
+            color: dateLabel.color; clickEnabled: false
+            anchors { top: parent.top; topMargin: 2 }
         }
 
         Text {

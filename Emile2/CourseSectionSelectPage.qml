@@ -23,7 +23,7 @@ Page {
         anchors.fill: parent
         model: ListModel { id: listViewModel }
         topMargin: 5; bottomMargin: 15
-        delegate:  ListItem {
+        delegate: ListItem {
             id: wrapper
             img: "qrc:/assets/group.svg"
             title: code + ""

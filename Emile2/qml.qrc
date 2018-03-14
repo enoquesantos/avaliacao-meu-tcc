@@ -5,9 +5,13 @@
         <file>qtquickcontrols2.conf</file>
 
         <!-- components reusáveis -->
+        <file>AwesomeIcon.qml</file>
+        <file>AwesomeFontIcon.otf</file>
+        <file>AwesomeIconFontLoader.qml</file>
         <file>Brand.qml</file>
         <file>ListItem.qml</file>
         <file>RequestHttp.qml</file>
+        <file>Toast.qml</file>
         <file>ViewMessagesPageDelegate.qml</file>
 
         <!-- páginas do app -->

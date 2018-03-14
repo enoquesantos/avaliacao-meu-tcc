@@ -1,5 +1,5 @@
 import QtQuick 2.8
-import QtQuick.Controls 2.1
+import QtQuick.Controls 2.3
 import QtQuick.Controls.Material 2.1
 
 Page {
@@ -8,8 +8,8 @@ Page {
     objectName: "DestinationGroupSelectPage.qml"
     state: "popPage,withActionButton"
 
-    property string actionButtonIcon: "send"
     property int courseSectionId
+    property string actionButtonIcon: "send"
     property string courseSectionName
     property string destinationName
     property string urlService
@@ -21,21 +21,26 @@ Page {
     // handle request http responses
     function handleRequestResponse(statusCode, response) {
         if (statusCode === 200) {
+            // apply the changes for last sent message.
+            // Now, the MessavesViewPage
+            // push the last message on the list view.
             textarea.clear()
-            // toast.show(qsTr("Successfully sended!"), true)
+            toast.show(qsTr("Message successfully sended"))
             timerFocusTextArea.running = true
         } else if (statusCode === 400 || statusCode === 404) {
+            messagesPendingToView.pop()
             messageDialog.title = qsTr("Error!")
             messageDialog.text = qsTr("The message cannot be sent!")
             messageDialog.open()
         } else {
+            messagesPendingToView.pop()
             messageDialog.title = qsTr("Error!")
             messageDialog.text = qsTr("An error occur in the server! Please try again.")
             messageDialog.open()
         }
     }
 
-    // add submit icon in window toolbar
+    // handle clicks from 'send icon' added in window toolbar
     function actionButtonCallback() {
         if (requestHttp.state === "loading") {
             return
@@ -59,7 +64,7 @@ Page {
                 courseSectionName = courseSectionNameSplited[0]
             postData.title = qsTr("All students of ") + courseSectionName
         } else if (forAllStudentsOfTeacher) {
-            postData.title = qsTr("All students of ") + settings.userProfile.name
+            postData.title = qsTr("All students of ") + window.getPrettyUserName(settings.userProfile.name)
         } else if (forAllStudentsOfProgram) {
             postData.program_id = settings.userProfile.program.id
             postData.title = qsTr("All students of program ") + settings.userProfile.program.abbreviation
@@ -69,27 +74,14 @@ Page {
         }
         postData.message = textarea.text
         postData.sender = settings.userProfile.id
-        postData.device = isIOS ? "IOS_DEVICE" : "ANDROID_DEVICE"
+        postData.device = Qt.platform.os === "ios" ? "IOS_DEVICE" : "ANDROID_DEVICE"
         requestHttp.post("/%1/".arg(urlService), JSON.stringify(postData), handleRequestResponse)
     }
 
     Timer {
-       id: timerFocusTextArea
-       running: true
-       onTriggered: textarea.forceActiveFocus()
-    }
-
-    Flickable {
-        id: flickable
-        anchors.fill: parent
-        width: parent.width
-        height: textarea.focus ? page.height*1.6 : page.height
-
-        Behavior on contentY {
-            NumberAnimation {
-                duration: 350
-            }
-        }
+        id: timerFocusTextArea
+        running: true
+        onTriggered: textarea.forceActiveFocus()
     }
 
     Row {
@@ -131,9 +123,9 @@ Page {
 
     Text {
         id: textMessageCharsLength
-        opacity: 0.7
+        opacity: 0.7; color: textarea.text.length > 300 ? "red" : "#444"
         font.pointSize: 8
-        text: 300 + " " + qsTr(" chars left")
+        text: 300 + qsTr(" chars left")
         anchors {
             top: _destinationNameTxt.bottom
             topMargin: 50
@@ -150,7 +142,7 @@ Page {
     Rectangle {
         id: rectangleTextarea
         color: "#fff"; radius: 15; z: 0
-        width: parent.width * 0.90; height: page.height * 0.25
+        width: parent.width * 0.95; height: page.height * 0.50
         anchors {
             top: textMessageCharsLength.bottom
             topMargin: 5
@@ -165,9 +157,9 @@ Page {
 
         TextArea {
             id: textarea
-            focus: true
-            selectByMouse: true
-            z: 1; width: parent.width * 0.95
+            focus: true; z: 1
+            selectByMouse: true; opacity: readOnly ? 0.8 : 1
+            width: parent.width * 0.95
             readOnly: requestHttp.state === "loading"
             renderType: Text.NativeRendering
             wrapMode: TextArea.WordWrap
