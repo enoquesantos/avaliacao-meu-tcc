@@ -31,14 +31,7 @@ Page {
     Timer {
         interval: 1500
         running: loginResult != null
-        onRunningChanged: if (running) busyIndicator.visible = true
         onTriggered: settings.userProfile = loginResult
-    }
-
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: requestHttp.state === "loading"
     }
 
     Flickable {

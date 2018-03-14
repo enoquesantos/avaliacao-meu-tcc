@@ -8,27 +8,38 @@
         <file>Brand.qml</file>
         <file>ListItem.qml</file>
         <file>RequestHttp.qml</file>
+        <file>ViewMessagesPageDelegate.qml</file>
 
         <!-- páginas do app -->
+        <file>CourseSectionSelectPage.qml</file>
+        <file>DestinationGroupSelectPage.qml</file>
         <file>LoginPage.qml</file>
         <file>LogoutPage.qml</file>
         <file>LostPassword.qml</file>
         <file>ProfileEditPage.qml</file>
         <file>ProfileViewPage.qml</file>
+        <file>SendMessagePage.qml</file>
         <file>ViewMessagesPage.qml</file>
-        <file>DestinationGroupSelectPage.qml</file>
-        <file>CourseSectionSelectPage.qml</file>
 
         <!-- ícones e imagens -->
+        <file>assets/access_time.svg</file>
         <file>assets/add_a_photo.svg</file>
         <file>assets/app_drawer.png</file>
         <file>assets/app_icon.png</file>
-        <file>assets/dehaze.svg</file>
-        <file>assets/exit_to_app.svg</file>
-        <file>assets/message.svg</file>
-        <file>assets/person.svg</file>
-        <file>assets/perm_identity.svg</file>
-        <file>assets/send.svg</file>
+        <file>assets/create.svg</file>
         <file>assets/chevron_left.svg</file>
+        <file>assets/chevron_right.svg</file>
+        <file>assets/date_range.svg</file>
+        <file>assets/dehaze.svg</file>
+        <file>assets/error_outline.svg</file>
+        <file>assets/exit_to_app.svg</file>
+        <file>assets/group.svg</file>
+        <file>assets/list.svg</file>
+        <file>assets/mail.svg</file>
+        <file>assets/message.svg</file>
+        <file>assets/perm_identity.svg</file>
+        <file>assets/person.svg</file>
+        <file>assets/save.svg</file>
+        <file>assets/send.svg</file>
     </qresource>
 </RCC>

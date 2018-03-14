@@ -36,7 +36,7 @@ Item {
                     console.log(xhr.responseText)
                     console.log("responseStatus:")
                     console.log(xhr.status)
-                    callback(null, 0)
+                    callback(0, null)
                 }
             }
         }

@@ -11,7 +11,7 @@ ApplicationWindow {
     width: 400; height: 600
     header: ToolBar {
         id: toolBar
-        visible: settings.isUserLoggedIn
+        visible: settings.isUserLoggedIn && pageStack.depth > 0
 
         property alias row: _row
 
@@ -30,7 +30,7 @@ ApplicationWindow {
                     else
                         pageStack.pop()
                 }
-                property bool isCurrentPageEnableToPop: pageStack.currentItem != null && pageStack.currentItem.state === "popPage"
+                property bool isCurrentPageEnableToPop: pageStack.currentItem != null && pageStack.currentItem.state.indexOf("popPage") > -1
             }
 
             Label {
@@ -38,6 +38,17 @@ ApplicationWindow {
                 elide: Label.ElideRight
                 verticalAlignment: Qt.AlignVCenter
                 anchors { left: toolButtonMenu.right; leftMargin: 20 }
+            }
+
+            ToolButton {
+                id: toolButtonSave
+                anchors.right: parent.right
+                visible: pageStack.currentItem && pageStack.currentItem.state.indexOf("withActionButton") > -1
+                icon.source: visible && "actionButtonIcon" in pageStack.currentItem ? "qrc:/assets/%1.svg".arg(pageStack.currentItem.actionButtonIcon) : ""
+                onClicked: {
+                    if (typeof pageStack.currentItem.actionButtonCallback == "function")
+                        pageStack.currentItem.actionButtonCallback()
+                }
             }
         }
     }
@@ -47,25 +58,25 @@ ApplicationWindow {
             _permission: "teacher, student, coordinator",
             _img: "qrc:/assets/message.svg",
             _description: "Ver mensagens",
-            _qmlSourceFile: "qrc:/ViewMessagesPage.qml"
+            _qmlSourceFile: "ViewMessagesPage.qml"
         },
         {
             _permission: "teacher, coordinator",
             _img: "qrc:/assets/send.svg",
             _description: "Enviar mensagem",
-            _qmlSourceFile: "qrc:/DestinationGroupSelectPage.qml"
+            _qmlSourceFile: "DestinationGroupSelectPage.qml"
         },
         {
             _permission: "teacher, student, coordinator",
             _img: "qrc:/assets/perm_identity.svg",
             _description: "Meu perfil",
-            _qmlSourceFile: "qrc:/ProfileViewPage.qml"
+            _qmlSourceFile: "ProfileViewPage.qml"
         },
         {
             _permission: "teacher, student, coordinator",
             _img: "qrc:/assets/exit_to_app.svg",
             _description: "Sair",
-            _qmlSourceFile: "qrc:/LogoutPage.qml"
+            _qmlSourceFile: "LogoutPage.qml"
         }
     ]
 
@@ -95,6 +106,43 @@ ApplicationWindow {
                     drawerListModel.append(pagesJson[i])
             }
         }
+
+        // starts a request to load the user course sections
+        // if user profile permission is a student or teacher.
+        Timer {
+            running: settings.isUserLoggedIn
+            onTriggered: {
+                if ("course_sections" in settings.userProfile && settings.userProfile.course_sections.length)
+                    return
+                requestHttp.post("/course_sections/", JSON.stringify({"id": settings.userProfile.id}), function(status, response) {
+                    if (status !== 200) return
+                    if (response.length && response !== settings.userProfile.course_sections) {
+                        settings.userProfile.course_sections = response
+                        // to apply the changes and save in local settings
+                        settings.userProfile = settings.userProfile
+                    }
+                })
+            }
+        }
+
+        // starts a request to load the user program
+        // if the user profile permission is a coordinator.
+        Timer {
+            id: loaderUserProgramTimer
+            running: settings.isUserLoggedIn && settings.userProfile.permission.description === "coordinator"
+            onTriggered: {
+                if ("program" in settings.userProfile && settings.userProfile.program !== null)
+                    return
+                requestHttp.get("/program/%1/".arg(settings.userProfile.id), null, function(status, response) {
+                    if (status !== 200) return
+                    if (response && settings.userProfile.program !== response) {
+                        settings.userProfile.program = response
+                        // to apply the changes and save in local settings
+                        settings.userProfile = settings.userProfile
+                    }
+                })
+            }
+        }
     }
 
     Settings {
@@ -116,6 +164,12 @@ ApplicationWindow {
         onCurrentItemChanged: drawer.close()
     }
 
+    BusyIndicator {
+        id: busyIndicator
+        z: 0; anchors.centerIn: parent
+        visible: requestHttp.state === "loading" || !pageStack.currentItem
+    }
+
     Drawer {
         id: drawer
         dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
@@ -124,7 +178,7 @@ ApplicationWindow {
 
         Rectangle {
             id: userInfoRectangle
-            color: "red"
+            color: "green"
             anchors.top: parent.top
             width: parent.width; height: 180
 
@@ -149,7 +203,7 @@ ApplicationWindow {
             model: ListModel { id: drawerListModel }
             delegate: Component {
                 ListItem {
-                    Component.onCompleted: console.log("sname: ", settings.userProfile.permission.name)
+                    highlighted: pageStack.depth && pageStack.currentItem.objectName === _qmlSourceFile
                     width: drawerListView.width
                     title: _description; img: _img
                     visible: settings.userProfile ? _permission.indexOf(settings.userProfile.permission.name) > -1 : false
@@ -167,10 +221,5 @@ ApplicationWindow {
     StackView {
         id: pageStack
         anchors.fill: parent
-
-        BusyIndicator {
-            anchors.centerIn: parent
-            visible: !pageStack.currentItem
-        }
     }
 }

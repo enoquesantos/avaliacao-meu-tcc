@@ -23,19 +23,19 @@ ItemDelegate {
         }
 
         Column {
-            spacing: 5
+            spacing: 2
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
                 id: _text
                 text: rootItem.title
-                font.pointSize: 14
+                font.pointSize: 12
             }
 
             Text {
                 id: _description
                 text: rootItem.description
-                font.pointSize: 10; opacity: 0.8
+                font.pointSize: 9; opacity: 0.8
             }
         }
     }

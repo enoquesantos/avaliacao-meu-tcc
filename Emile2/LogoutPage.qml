@@ -12,14 +12,8 @@ Page {
     Timer {
         id: timer
         interval: 2000
-        onRunningChanged: if (running) busyIndicator.visible = true
+        onRunningChanged: if (running) requestHttp.state = "loading"
         onTriggered: settings.userProfile = null
-    }
-
-    BusyIndicator {
-        id: busyIndicator
-        visible: timer.running
-        anchors.centerIn: parent
     }
 
     Label {
