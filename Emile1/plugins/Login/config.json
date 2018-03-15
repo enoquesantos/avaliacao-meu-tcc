@@ -1,13 +1,13 @@
 {
     "pages": [
         {
-            "qml": "Login.qml",
+            "qml": "LoginPage.qml",
             "isLoginPage": true
         },
         {
-            "qml": "Logout.qml",
+            "qml": "LogoutPage.qml",
             "title": "Sair",
-            "roles": ["teacher"],
+            "roles": ["teacher", "student"],
             "awesomeIcon": "sign_out",
             "order": -1,
             "showInDrawer": true

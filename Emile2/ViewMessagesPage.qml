@@ -16,10 +16,9 @@ Page {
         // load all messages from local settings
         var i = 0, limit = 16, messages = []
         messages = localMessages.savedMessages.slice(i, limit)
-        messages.reverse()
         while (i < limit) apendObject(messages[i++], false, true)
 
-        // starts a request to load new messages
+        // starts the initial request to load messages from webservice
         request(true)
     }
 
@@ -39,7 +38,7 @@ Page {
     // on the list, to prevent show duplicated messages.
     // @param message Object the message to append on the list
     // @param moveToTop bool used to check if message will be moved to top, useful for newested messages
-    // @param forceAppend bool used to ignore the exists check message in local settings
+    // @param isFromLocalSettings bool used to ignore the exists check message in local settings
     function apendObject(message, moveToTop, isFromLocalSettings) {
         if (!message || typeof message == "undefined")
             return
@@ -88,6 +87,7 @@ Page {
             requestHttp.get(nextPage, null, handleRequestResponse) // request to paginate messages, loading more messages from webservice
     }
 
+    // a simple "database" to user read messages offline :)
     Settings {
         id: localMessages
         property var savedMessages: []
@@ -111,10 +111,8 @@ Page {
             spacing: 5
             anchors.centerIn: parent
 
-            Image {
-                width: 75; height: width
-                source: "qrc:/assets/error_outline.svg"; smooth: true
-                asynchronous: true; cache: true
+            AwesomeIcon {
+                size: 75; name: "warning"; clickEnabled: false
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 

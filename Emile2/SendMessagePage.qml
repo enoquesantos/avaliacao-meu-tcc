@@ -1,6 +1,5 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.3
-import QtQuick.Controls.Material 2.1
 
 Page {
     id: page
@@ -25,7 +24,7 @@ Page {
             // Now, the MessavesViewPage
             // push the last message on the list view.
             textarea.clear()
-            toast.show(qsTr("Message successfully sended"))
+            toast.show(qsTr("Message successfully sended"), true)
             timerFocusTextArea.running = true
         } else if (statusCode === 400 || statusCode === 404) {
             messagesPendingToView.pop()
@@ -55,7 +54,7 @@ Page {
             messageDialog.open()
             return
         }
-        // configure the submit messages arguments.
+        // configure the submit messages arguments
         var postData = ({})
         if (forSpecificStudents) {
             postData.course_section_id = parseInt(courseSectionId)
@@ -93,16 +92,16 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
 
-        Image {
-            asynchronous: true; smooth: true
-            width: 16; height: width
-            source: "qrc:/assets/message.svg"
+        AwesomeIcon {
+            size: 15
+            name: "comments_o"
+            color: _destinationNameMessage.color
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             id: _destinationNameMessage
-            font.pointSize: 16
+            font.pointSize: 18
             color: _destinationNameTxt.color
             text: qsTr("Sending a message to: ")
             anchors.verticalCenter: parent.verticalCenter
@@ -117,14 +116,14 @@ Page {
         text: destinationName
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
-        font { weight: Font.Bold; pointSize: 10 }
+        font { weight: Font.Bold; pointSize: 12 }
         anchors { top: infoRow.bottom; topMargin: 12; horizontalCenter: parent.horizontalCenter }
     }
 
     Text {
         id: textMessageCharsLength
         opacity: 0.7; color: textarea.text.length > 300 ? "red" : "#444"
-        font.pointSize: 8
+        font.pointSize: 10
         text: 300 + qsTr(" chars left")
         anchors {
             top: _destinationNameTxt.bottom
@@ -141,18 +140,12 @@ Page {
 
     Rectangle {
         id: rectangleTextarea
-        color: "#fff"; radius: 15; z: 0
-        width: parent.width * 0.95; height: page.height * 0.50
+        color: "#eaeaea"; radius: 5; z: 0; border { color: "#cecece"; width: 1 }
+        width: parent.width * 0.95; height: page.height * 0.45
         anchors {
             top: textMessageCharsLength.bottom
             topMargin: 5
             horizontalCenter: parent.horizontalCenter
-        }
-
-        Pane {
-            z: -1; Material.elevation: 1
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width; height: parent.height
         }
 
         TextArea {
@@ -161,12 +154,10 @@ Page {
             selectByMouse: true; opacity: readOnly ? 0.8 : 1
             width: parent.width * 0.95
             readOnly: requestHttp.state === "loading"
-            renderType: Text.NativeRendering
             wrapMode: TextArea.WordWrap
-            mouseSelectionMode: TextEdit.SelectCharacters
+            font.capitalization: Font.AllLowercase
             placeholderText: qsTr("Write the text here...")
             anchors.horizontalCenter: parent.horizontalCenter
-            onFocusChanged: if (focus) flickable.contentY = textarea.y
             background: Rectangle {
                 color: "transparent"
                 y: (textarea.height-height) - (textarea.bottomPadding / 1.3)
@@ -180,7 +171,8 @@ Page {
         opacity: 0.7; clip: true
         width: page.width * 0.75
         wrapMode: Text.WordWrap
-        font.pointSize: 9
+        font.pointSize: 10
+        color: "#444"
         horizontalAlignment: Text.AlignHCenter
         text: qsTr("The message cannot be empty and cannot pass of 300 characters!<br>You can use links prepending with http://.")
         anchors {

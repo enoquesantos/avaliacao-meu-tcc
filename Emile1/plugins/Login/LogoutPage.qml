@@ -4,7 +4,6 @@ import QtQuick.Controls 2.2
 import "qrc:/publicComponentes/" as Components
 
 Components.BasePage {
-    id: page
     title: qsTr("Logout")
     toolBarState: "goBack"
     absPath: Config.plugins.login + "Logout.qml"
@@ -19,29 +18,22 @@ Components.BasePage {
         onTriggered: Subject.notify(Config.events.logoutUser, 0)
     }
 
-    BusyIndicator {
+    Label {
         visible: timer.running
+        text: qsTr("Good bye!")
+        color: "blue"
+        opacity: 0.7; font { pointSize: 20; bold: true }
         anchors.centerIn: parent
     }
 
-    Label {
-        id: label
-        visible: timer.running
-        text: qsTr("Good bye!")
-        color: Config.theme.colorPrimary
-        opacity: 0.7; font { pointSize: Config.fontSize.large; bold: true }
-        anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
-    }
-
     Column {
-        id: actionColumn
         anchors.centerIn: parent
         spacing: 50; visible: !timer.running
 
         Label {
             text: qsTr("Are sure you want to quit the app?")
-            color: Config.theme.colorPrimary
-            font { pointSize: Config.fontSize.large; bold: true }
+            color: "blue"
+            font { pointSize: 18; bold: true }
             anchors.horizontalCenter: parent.horizontalCenter
         }
 

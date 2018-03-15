@@ -11,7 +11,7 @@ ApplicationWindow {
     width: 400; height: 600
     header: ToolBar {
         id: toolBar
-        visible: settings.isUserLoggedIn && pageStack.depth > 0
+        visible: settings.isUserLoggedIn && pageStack.depth > 0 && pageStack.currentItem.state.indexOf("hideToolBar") === -1
 
         property alias row: _row
 
@@ -200,7 +200,7 @@ ApplicationWindow {
 
         Rectangle {
             id: userInfoRectangle
-            color: "green"
+            color: "blue"
             anchors.top: parent.top
             width: parent.width; height: 180
 
@@ -208,10 +208,11 @@ ApplicationWindow {
                 id: name
                 asynchronous: true
                 anchors { bottom: parent.bottom; bottomMargin: 70; left: parent.left; leftMargin: 15 }
-                source: settings.userProfile ? settings.userProfile.image_path : "qrc:/assets/add_a_photo.svg"
+                source: settings.userProfile ? settings.userProfile.image_path : "qrc:/assets/person.svg"
             }
 
             Text {
+                color: "#fafafa"
                 text: settings.userProfile ? (settings.userProfile.name + "<br>" + settings.userProfile.email) : "Enoque Joseneas<br>enoquejoseneas@gmail.com"
                 anchors { bottom: parent.bottom; bottomMargin: 25; left: parent.left; leftMargin: 15 }
             }

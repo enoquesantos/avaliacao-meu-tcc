@@ -8,5 +8,9 @@
             "order": 5,
             "showInDrawer": true
         }
+    ],
+    "listeners": [
+        "LoadUserProgram.qml",
+        "LoadUserCourseSections.qml"
     ]
 }

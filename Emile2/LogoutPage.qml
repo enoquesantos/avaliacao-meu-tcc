@@ -12,17 +12,22 @@ Page {
     Timer {
         id: timer
         interval: 2000
-        onRunningChanged: if (running) requestHttp.state = "loading"
         onTriggered: settings.userProfile = null
+        onRunningChanged: {
+            if (running) {
+                page.opacity = 0.7
+                page.state += ",hideToolBar"
+            }
+        }
     }
 
     Label {
         id: label
         visible: timer.running
         text: qsTr("Good bye!")
-        color: "red"
+        color: "blue"
         opacity: 0.7; font { pointSize: 20; bold: true }
-        anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
+        anchors.centerIn: parent
     }
 
     Column {
@@ -33,7 +38,7 @@ Page {
         Label {
             text: qsTr("Are sure you want to quit the app?")
             color: "blue"
-            font { pointSize: 12; bold: true }
+            font { pointSize: 18; bold: true }
             anchors.horizontalCenter: parent.horizontalCenter
         }
 

@@ -19,7 +19,7 @@
         <file>DestinationGroupSelectPage.qml</file>
         <file>LoginPage.qml</file>
         <file>LogoutPage.qml</file>
-        <file>LostPassword.qml</file>
+        <file>LostPasswordPage.qml</file>
         <file>ProfileEditPage.qml</file>
         <file>ProfileViewPage.qml</file>
         <file>SendMessagePage.qml</file>

@@ -99,7 +99,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 enabled: !busyIndicator.visible && loginResult === null
                 text: qsTr("Retrieve password")
-                onClicked: pageStack.push("LostPassword.qml")
+                onClicked: pageStack.push("LostPasswordPage.qml")
             }
         }
     }

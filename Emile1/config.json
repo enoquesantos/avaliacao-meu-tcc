@@ -12,7 +12,7 @@
     "showDrawerImage": true,
     "restService": {
         "userName": "apirest",
-        "userPass": "1q2w3e4r5t6y",
+        "userPass": "1q2w3e4r5t",
         "baseUrl": "http://enoque.pythonanywhere.com"
     },
     "fontSize": {

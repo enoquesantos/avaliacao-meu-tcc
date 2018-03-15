@@ -50,6 +50,7 @@ Components.BasePage {
 
             TextField {
                 id: login
+                width: parent.width
                 color: Config.theme.textColorPrimary
                 selectByMouse: true; cursorVisible: focus
                 renderType: Text.NativeRendering
@@ -91,7 +92,7 @@ Components.BasePage {
                 anchors.horizontalCenter: parent.horizontalCenter
                 enabled: !isPageBusy && loginResult === null
                 text: qsTr("Retrieve password")
-                onClicked: pageStack.push(Config.plugins.login + "LostPassword.qml")
+                onClicked: pageStack.push(Config.plugins.login + "LostPasswordPage.qml")
             }
         }
     }

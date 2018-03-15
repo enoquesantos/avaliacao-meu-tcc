@@ -3,17 +3,18 @@
         {
             "title": "Ver mensagens",
             "icon": "commenting",
-            "roles": ["teacher"],
+            "roles": ["teacher", "student"],
             "order": 10,
-            "qml": "ViewMessages.qml",
-            "showInDrawer": true
+            "qml": "ViewMessagesPage.qml",
+            "showInDrawer": true,
+            "isHomePage": true
         },
         {
             "title": "Enviar mensagem",
             "icon": "send",
-            "roles": ["teacher"],
+            "roles": ["teacher", "student"],
             "order": 9,
-            "qml": "DestinationGroupSelect.qml",
+            "qml": "DestinationGroupSelectPage.qml",
             "showInDrawer": true
         }
     ]

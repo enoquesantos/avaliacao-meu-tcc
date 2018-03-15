@@ -43,7 +43,7 @@ Rectangle {
         Text {
             id: authorLabel
             color: dateLabel.color
-            font.pointSize: 9
+            font.pointSize: 12
             anchors.verticalCenter: parent.verticalCenter
             text: fromCurrentUser ? qsTr("You") : window.getPrettyUserName(sender.name)
         }
@@ -72,7 +72,7 @@ Rectangle {
             textFormat: Text.StyledText
             color: "#444"
             linkColor: "blue"
-            font { wordSpacing: 1.1; pointSize: 11 }
+            font { wordSpacing: 1.1; pointSize: 12 }
             anchors { right: parent.right; left: parent.left; margins: 10 }
             onLinkActivated: Qt.openUrlExternally(link)
         }
@@ -80,33 +80,33 @@ Rectangle {
 
     RowLayout {
         id: bottomRow
-        height: 13; spacing: 5; z: 1
+        height: 13; spacing: 4; z: 1
         anchors {
             bottom: parent.bottom; bottomMargin: 7
             right: parent.right; rightMargin: 8
         }
 
         AwesomeIcon {
-            size: dateLabel.font.pointSize-1; name: "calendar"
+            size: dateLabel.font.pointSize; name: "calendar"
             visible: dateLabel.text.length > 0
             color: dateLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 2 }
+            anchors { top: parent.top; topMargin: 0 }
         }
 
         Text {
             id: dateLabel
             text: Qt.formatDateTime(date, "dd/MM/yyyy")
-            font.pointSize: 9; color: "#555"
+            font.pointSize: 11; color: "#555"
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Item { width: 8; height: parent.height }
+        Item { width: 5; height: parent.height }
 
         AwesomeIcon {
-            size: dateLabel.font.pointSize; name: "clock_o"
+            size: dateLabel.font.pointSize+1; name: "clock_o"
             visible: timeLabel.text.length > 0
             color: dateLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 2 }
+            anchors { top: parent.top; topMargin: 0 }
         }
 
         Text {

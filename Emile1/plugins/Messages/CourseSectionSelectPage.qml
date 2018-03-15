@@ -1,18 +1,16 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
-
-import "qrc:/publicComponents/" as Components
+import "qrc:/publicComponentes/" as Components
 
 Components.BasePage {
     id: page
     title: qsTr("Select a course sections")
-    absPath: Config.plugins.messages + "DestinationGroupSelect.qml"
+    absPath: Config.plugins.messages + "DestinationGroupSelectPage.qml"
     listViewDelegate: pageListViewDelegate
-    toolBarState: "goback"
-    hasNetworkRequest: false
+    toolBarState: "goback"; hasNetworkRequest: false
 
     Component.onCompleted: {
-        var i = 0, objc = {}, coursesSections = user.profile.course_sections
+        var i = 0, objc = {}, coursesSections = userProfile.course_sections
         while (i < coursesSections.length) {
             objc = coursesSections[i++]
             objc.courseSectionId = objc.id
@@ -39,7 +37,7 @@ Components.BasePage {
                     "forSpecificStudents" : true,
                     "urlService" : urlService
                 }
-                pageStack.push(Config.plugins.messages + "SendMessage.qml", args)
+                pageStack.push(Config.plugins.messages + "SendMessagePage.qml", args)
             }
         }
     }

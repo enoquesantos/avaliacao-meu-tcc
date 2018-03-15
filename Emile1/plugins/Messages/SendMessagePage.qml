@@ -1,8 +1,8 @@
 import QtQuick 2.8
-import QtQuick.Controls 2.1
-import QtQuick.Controls.Material 2.1
+import QtQuick.Controls 2.3
 
-import "qrc:/publicComponents/" as Components
+import "qrc:/publicComponentes/" as Components
+import "plugin_functions.js" as Func
 
 Components.BasePage {
     id: page
@@ -25,7 +25,7 @@ Components.BasePage {
                     return
                 }
                 // configure the submit messages arguments.
-                var postData = ({})
+                var postData = {}
                 if (forSpecificStudents) {
                     postData.course_section_id = parseInt(courseSectionId)
                     var courseSectionNameSplited = courseSectionName.split("-")
@@ -33,17 +33,17 @@ Components.BasePage {
                         courseSectionName = courseSectionNameSplited[0]
                     postData.title = qsTr("All students of ") + courseSectionName
                 } else if (forAllStudentsOfTeacher) {
-                    postData.title = qsTr("All students of ") + user.shortUsername
+                    postData.title = qsTr("All students of ") + Func.getPrettyUserName(userProfile.profile.name)
                 } else if (forAllStudentsOfProgram) {
-                    postData.program_id = user.profile.program.id
-                    postData.title = qsTr("All students of program ") + user.profile.program.abbreviation
+                    postData.program_id = userProfile.program.id
+                    postData.title = qsTr("All students of program ") + userProfile.profile.program.abbreviation
                 } else if (forAllTeachersOfAProgram) {
-                    postData.program_id = user.profile.program.id
-                    postData.title = qsTr("All teachers of program ") + user.profile.program.abbreviation
+                    postData.program_id = userProfile.program.id
+                    postData.title = qsTr("All teachers of program ") + userProfile.profile.program.abbreviation
                 }
                 postData.message = textarea.text
-                postData.sender = user.profile.id
-                // postData.device = isIOS ? "IOS_DEVICE" : "ANDROID_DEVICE"
+                postData.sender = userProfile.profile.id
+                postData.device = Qt.platform.os === "ios" ? "IOS_DEVICE" : "ANDROID_DEVICE"
                 requestHttp.post("/%1/".arg(urlService), JSON.stringify(postData))
             }
         }
@@ -53,7 +53,7 @@ Components.BasePage {
     onRequestFinished: {
         if (statusCode === 200) {
             textarea.clear()
-            toast.show(qsTr("Successfully sended!"), true)
+            toast.show(qsTr("Message successfully sended"), true)
             timerFocusTextArea.running = true
         } else if (statusCode === 400 || statusCode === 404) {
             snackbar.show(qsTr("The message cannot be sent!"), true)
@@ -77,19 +77,6 @@ Components.BasePage {
        onTriggered: textarea.forceActiveFocus()
     }
 
-    Flickable {
-        id: flickable
-        anchors.fill: parent
-        width: parent.width
-        height: textarea.focus ? page.height*1.6 : page.height
-
-        Behavior on contentY {
-            NumberAnimation {
-                duration: 350
-            }
-        }
-    }
-
     Row {
         id: infoRow
         spacing: 5
@@ -103,13 +90,15 @@ Components.BasePage {
             size: 15
             name: "comments_o"
             color: _destinationNameMessage.color
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             id: _destinationNameMessage
-            font.pointSize: Config.fontSize.large
+            font.pointSize: 18
             color: _destinationNameTxt.color
             text: qsTr("Sending a message to: ")
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
@@ -121,16 +110,15 @@ Components.BasePage {
         text: destinationName
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
-        font { weight: Font.Bold; pointSize: Config.fontSize.large }
+        font { weight: Font.Bold; pointSize: 12 }
         anchors { top: infoRow.bottom; topMargin: 12; horizontalCenter: parent.horizontalCenter }
     }
 
     Text {
         id: textMessageCharsLength
-        opacity: 0.7
-        font.pointSize: Config.fontSize.normal
-        color: Config.theme.textColorPrimary
-        text: 300 + " " + qsTr(" chars left")
+        opacity: 0.7; color: textarea.text.length > 300 ? "red" : "#444"
+        font.pointSize: 10
+        text: 300 + qsTr(" chars left")
         anchors {
             top: _destinationNameTxt.bottom
             topMargin: 50
@@ -146,32 +134,24 @@ Components.BasePage {
 
     Rectangle {
         id: rectangleTextarea
-        color: "#fff"; radius: 15; z: 0
-        width: parent.width * 0.90; height: page.height * 0.25
+        color: "#eaeaea"; radius: 5; z: 0; border { color: "#cecece"; width: 1 }
+        width: parent.width * 0.95; height: page.height * 0.45
         anchors {
             top: textMessageCharsLength.bottom
             topMargin: 5
             horizontalCenter: parent.horizontalCenter
         }
 
-        Pane {
-            z: -1; Material.elevation: 1
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width; height: parent.height
-        }
-
         TextArea {
             id: textarea
-            focus: true
-            selectByMouse: true
-            z: 1; width: parent.width * 0.95
+            focus: true; z: 1
+            selectByMouse: true; opacity: readOnly ? 0.8 : 1
+            width: parent.width * 0.95
             readOnly: isPageBusy
-            renderType: Text.NativeRendering
             wrapMode: TextArea.WordWrap
-            mouseSelectionMode: TextEdit.SelectCharacters
+            font.capitalization: Font.AllLowercase
             placeholderText: qsTr("Write the text here...")
             anchors.horizontalCenter: parent.horizontalCenter
-            onFocusChanged: if (focus) flickable.contentY = textarea.y
             background: Rectangle {
                 color: "transparent"
                 y: (textarea.height-height) - (textarea.bottomPadding / 1.3)
@@ -185,7 +165,7 @@ Components.BasePage {
         opacity: 0.7; clip: true
         width: page.width * 0.75
         wrapMode: Text.WordWrap
-        font.pointSize: Config.fontSize.small
+        font.pointSize: 10
         color: Config.theme.textColorPrimary
         horizontalAlignment: Text.AlignHCenter
         text: qsTr("The message cannot be empty and cannot pass of 300 characters!<br>You can use links prepending with http://.")

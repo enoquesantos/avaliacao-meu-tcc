@@ -1,2 +1,4 @@
-build-Emile1-Desktop-Debug
-build-Emile2-Desktop-Debug
+build-Emile1-Desktop-Debug/
+build-Emile2-Desktop-Debug/
+build-Emile1-Android_for_armeabi_v7a_GCC_4_9_Qt_5_10_1_android_armv7-Debug/
+build-Emile2-Android_for_armeabi_v7a_GCC_4_9_Qt_5_10_1_android_armv7-Debug/

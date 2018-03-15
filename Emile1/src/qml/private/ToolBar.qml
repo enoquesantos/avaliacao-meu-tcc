@@ -110,7 +110,7 @@ ToolBar {
     Binding {
         target: toolBar
         property: "state"
-        value: window.currentPage.toolBarState
+        value: window.currentPage ? window.currentPage.toolBarState : "normal"
         when: window.currentPage && "toolBarState" in window.currentPage
     }
 

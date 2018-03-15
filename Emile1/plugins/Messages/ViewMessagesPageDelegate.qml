@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
-import "qrc:/publicComponents" as Components
+import "qrc:/publicComponentes" as Components
+import "plugin_functions.js" as Func
 
 Rectangle {
     id: delegate
@@ -12,7 +13,7 @@ Rectangle {
     width: page.width * 0.94; height: topRow.height + labelMessageItem.implicitHeight + bottomRow.implicitHeight + 25
     border { width: 1; color: fromCurrentUser ? "#ff71da5e" : "#ffbbbbbb" }
 
-    property bool fromCurrentUser: (sender.id === user.profile.id)
+    property bool fromCurrentUser: sender.id === userProfileId
 
     Loader {
         asynchronous: true; active: true
@@ -27,18 +28,18 @@ Rectangle {
     RowLayout {
         id: topRow
         spacing: 0; z: 1
-        height: 13
+        height: 15
         anchors {
             top: parent.top; topMargin: 5
-            left: parent.left; leftMargin: 10
-            right: parent.right; rightMargin: 10
+            left: parent.left; leftMargin: 8
+            right: parent.right; rightMargin: 8
         }
 
         Components.AwesomeIcon {
             size: authorLabel.font.pointSize
             name: fromCurrentUser ? "arrow_right" : "commenting"
             color: authorLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 0 }
+            anchors { top: parent.top; topMargin: 2 }
         }
 
         Text {
@@ -46,7 +47,7 @@ Rectangle {
             color: labelMessage.color
             font.pointSize: Config.fontSize.small+1
             anchors.verticalCenter: parent.verticalCenter
-            text: fromCurrentUser ? qsTr("You") : getSenderName(sender.name)
+            text: fromCurrentUser ? qsTr("You") : Func.getSenderName(sender.name)
         }
 
         Text {
@@ -72,7 +73,7 @@ Rectangle {
             elide: Label.ElideRight
             textFormat: Text.StyledText
             color: Config.theme.textColorPrimary
-            linkColor: Config.theme.linkColor
+            linkColor: "blue"
             font { wordSpacing: 1.1; pointSize: Config.fontSize.normal+1 }
             anchors { right: parent.right; left: parent.left; margins: 10 }
             onLinkActivated: Qt.openUrlExternally(link)
@@ -81,15 +82,14 @@ Rectangle {
 
     RowLayout {
         id: bottomRow
-        spacing: 1; z: 1
-        height: 13
+        height: 13; spacing: 4; z: 1
         anchors {
             bottom: parent.bottom; bottomMargin: 7
-            right: parent.right; rightMargin: 10
+            right: parent.right; rightMargin: 8
         }
 
         Components.AwesomeIcon {
-            size: dateLabel.font.pointSize-1; name: "calendar"
+            size: dateLabel.font.pointSize; name: "calendar"
             visible: dateLabel.text.length > 0
             color: dateLabel.color; clickEnabled: false
             anchors { top: parent.top; topMargin: 0 }
@@ -103,13 +103,13 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Item { width: 8; height: parent.height }
+        Item { width: 5; height: parent.height }
 
         Components.AwesomeIcon {
             size: dateLabel.font.pointSize; name: "clock_o"
             visible: timeLabel.text.length > 0
             color: dateLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 0 }
+            anchors { top: parent.top; topMargin: 2 }
         }
 
         Text {
