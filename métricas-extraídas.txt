@@ -1,7 +1,7 @@
 ## Número de linhas de código implementado em cada versão:
     - tutorial utilizado: https://stackoverflow.com/questions/1358540/how-to-count-all-the-lines-of-code-in-a-directory-recursively
-    Emile1 (versão com o framework): 1120 total de linhas
-    Emile2 (versão sem o framework): 5855 total de linhas
+    Emile1 (versão com o framework, somente os plugins): 1113 total de linhas
+    Emile2 (versão sem o framework): 5199 total de linhas
 
 
 ## Bugs encontrados:
