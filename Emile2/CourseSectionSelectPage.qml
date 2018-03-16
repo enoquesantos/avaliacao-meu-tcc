@@ -28,6 +28,7 @@ Page {
             img: "qrc:/assets/group.svg"
             title: code + ""
             description: name + ""
+            showSeparator: true
             onClicked: {
                 var args = {
                     "courseSectionId" : courseSectionId,
@@ -36,7 +37,7 @@ Page {
                     "forSpecificStudents" : true,
                     "urlService" : urlService
                 }
-                pageStack.push("qrc:/SendMessagePage.qml", args)
+                pageStack.push("SendMessagePage.qml", args)
             }
         }
     }

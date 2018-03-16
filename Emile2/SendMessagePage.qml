@@ -124,6 +124,7 @@ Page {
         id: textMessageCharsLength
         opacity: 0.7; color: textarea.text.length > 300 ? "red" : "#444"
         font.pointSize: 10
+        font.bold: textarea.text.length > 300
         text: 300 + qsTr(" chars left")
         anchors {
             top: _destinationNameTxt.bottom
@@ -141,7 +142,7 @@ Page {
     Rectangle {
         id: rectangleTextarea
         color: "#eaeaea"; radius: 5; z: 0; border { color: "#cecece"; width: 1 }
-        width: parent.width * 0.95; height: page.height * 0.45
+        width: parent.width * 0.95; height: page.height * 0.30
         anchors {
             top: textMessageCharsLength.bottom
             topMargin: 5

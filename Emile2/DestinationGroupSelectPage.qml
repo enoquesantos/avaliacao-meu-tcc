@@ -20,6 +20,7 @@ Page {
             id: wrapper
             img: "qrc:/assets/list.svg"
             title: name
+            showSeparator: true
             onClicked: {
                 var args = {
                     "urlService": url_service
@@ -27,17 +28,17 @@ Page {
                 if (url_service === "sendMessagesToStudentsOfATeacher") {
                     args.forAllStudentsOfTeacher = true
                     args.destinationName = name || code || ""
-                    pageStack.push("qrc:/SendMessagePage.qml", args)
+                    pageStack.push("SendMessagePage.qml", args)
                 } else if (url_service === "sendMessagesToStudentsOfAProgram") {
                     args.forAllStudentsOfProgram = true
                     args.destinationName = name || code || ""
-                    pageStack.push("qrc:/SendMessagePage.qml", args)
+                    pageStack.push("SendMessagePage.qml", args)
                 } else if (url_service === "sendMessagesToTeachersOfAProgram") {
                     args.forAllTeachersOfAProgram = true
                     args.destinationName = name || code || ""
-                    pageStack.push("qrc:/SendMessagePage.qml", args)
+                    pageStack.push("SendMessagePage.qml", args)
                 } else {
-                    pageStack.push("qrc:/CourseSectionSelectPage.qml", args)
+                    pageStack.push("CourseSectionSelectPage.qml", args)
                 }
             }
         }

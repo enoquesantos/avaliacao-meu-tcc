@@ -13,20 +13,21 @@ Rectangle {
 
     property bool fromCurrentUser: sender.id === userProfileId
 
+    // exibe uma sombra ao redor do componente
     Loader {
         asynchronous: true; active: true
         sourceComponent: Pane {
             z: -1; Material.elevation: 1
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width-1; height: parent.height-1
+            width: parent.width; height: parent.height-1
         }
         onLoaded: item.parent = delegate
     }
 
     RowLayout {
         id: topRow
-        spacing: 0; z: 1
-        height: 15
+        spacing: 2
+        height: 22; width: parent.width
         anchors {
             top: parent.top; topMargin: 5
             left: parent.left; leftMargin: 8
@@ -34,25 +35,30 @@ Rectangle {
         }
 
         AwesomeIcon {
-            size: authorLabel.font.pointSize
+            size: authorLabel.font.pointSize - 2
             name: fromCurrentUser ? "arrow_right" : "commenting"
-            color: dateLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 2 }
+            color: authorLabel.color; clickEnabled: false
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             id: authorLabel
-            color: dateLabel.color
+            color: labelMessage.color
             font.pointSize: 12
             anchors.verticalCenter: parent.verticalCenter
             text: fromCurrentUser ? qsTr("You") : window.getPrettyUserName(sender.name)
         }
 
-        Text {
-            text: title
-            font.pointSize: authorLabel.font.pointSize
-            color: authorLabel.color
+        Item {
+            width: parent.width * 0.80; height: parent.height
             anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+
+            Text {
+                text: title; width: parent.width; height: parent.height
+                font.pointSize: authorLabel.font.pointSize
+                horizontalAlignment: Text.AlignRight
+                color: authorLabel.color; elide: Text.ElideRight
+            }
         }
     }
 
@@ -80,33 +86,30 @@ Rectangle {
 
     RowLayout {
         id: bottomRow
-        height: 13; spacing: 4; z: 1
-        anchors {
-            bottom: parent.bottom; bottomMargin: 7
-            right: parent.right; rightMargin: 8
-        }
+        height: 20; spacing: 4
+        anchors { bottom: parent.bottom; bottomMargin: 7; right: parent.right; rightMargin: 8 }
 
         AwesomeIcon {
             size: dateLabel.font.pointSize; name: "calendar"
             visible: dateLabel.text.length > 0
             color: dateLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 0 }
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             id: dateLabel
             text: Qt.formatDateTime(date, "dd/MM/yyyy")
-            font.pointSize: 11; color: "#555"
+            font.pointSize: 11; color: "#777"
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Item { width: 5; height: parent.height }
 
         AwesomeIcon {
-            size: dateLabel.font.pointSize+1; name: "clock_o"
+            size: dateLabel.font.pointSize + 2; name: "clock_o"
             visible: timeLabel.text.length > 0
             color: dateLabel.color; clickEnabled: false
-            anchors { top: parent.top; topMargin: 0 }
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {

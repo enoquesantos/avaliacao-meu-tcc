@@ -29,7 +29,6 @@ Page {
             messageDialog.text = qsTr("Your password was sent for your email!")
         else
             messageDialog.text = qsTr("A error occur in the server! Try again!")
-        messageDialog.title = qsTr("Error!")
         messageDialog.open()
     }
 

@@ -11,7 +11,7 @@ Page {
     property string actionButtonIcon: "create"
 
     function actionButtonCallback() {
-        pageStack.push(Qt.resolvedUrl("ProfileEditPage.qml"))
+        pageStack.push("ProfileEditPage.qml")
     }
 
     Component.onCompleted: {

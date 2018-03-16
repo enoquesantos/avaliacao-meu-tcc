@@ -11,7 +11,7 @@ ApplicationWindow {
     width: 400; height: 600
     header: ToolBar {
         id: toolBar
-        visible: settings.isUserLoggedIn && pageStack.depth > 0 && pageStack.currentItem.state.indexOf("hideToolBar") === -1
+        visible: settings.isUserLoggedIn && pageStack.currentItem && pageStack.currentItem.state.indexOf("hideToolBar") === -1
 
         property alias row: _row
 
@@ -24,6 +24,7 @@ ApplicationWindow {
                 id: toolButtonMenu
                 enabled: pageStack.currentItem != null
                 icon.source: "qrc:/assets/%1".arg(isCurrentPageEnableToPop ? "chevron_left.svg" : "dehaze.svg")
+                icon.color: "blue"
                 onClicked: {
                     if (drawer.position <= 0 && !isCurrentPageEnableToPop)
                         drawer.open()
@@ -45,6 +46,7 @@ ApplicationWindow {
                 anchors.right: parent.right
                 visible: pageStack.currentItem && pageStack.currentItem.state.indexOf("withActionButton") > -1
                 icon.source: visible && "actionButtonIcon" in pageStack.currentItem ? "qrc:/assets/%1.svg".arg(pageStack.currentItem.actionButtonIcon) : ""
+                icon.color: "blue"
                 onClicked: {
                     if (typeof pageStack.currentItem.actionButtonCallback == "function")
                         pageStack.currentItem.actionButtonCallback()
@@ -88,7 +90,7 @@ ApplicationWindow {
         }
         if (!settings.isUserLoggedIn) {
             pageStack.clear()
-            pageStack.push("qrc:/LoginPage.qml")
+            pageStack.push("LoginPage.qml")
         }
     }
 
@@ -167,7 +169,7 @@ ApplicationWindow {
         id: settings
 
         property bool isUserLoggedIn
-        onIsUserLoggedInChanged: if (!isUserLoggedIn) pageStack.push("qrc:/LoginPage.qml")
+        onIsUserLoggedInChanged: if (!isUserLoggedIn) pageStack.push("LoginPage.qml")
 
         property var userProfile
         onUserProfileChanged: isUserLoggedIn = (userProfile !== null && "email" in userProfile)
@@ -189,7 +191,7 @@ ApplicationWindow {
     BusyIndicator {
         id: busyIndicator
         z: 5; anchors.centerIn: parent
-        visible: requestHttp.state === "loading" && pageStack.currentItem != null
+        visible: requestHttp.state === "loading" || pageStack.currentItem == null
     }
 
     Drawer {
