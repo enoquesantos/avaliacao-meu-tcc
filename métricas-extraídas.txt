@@ -10,25 +10,27 @@
         2. Após o utilizar o aplicativo, visualizar as mensagens e navegar em algumas páginas, algumas requisições não são realizadas, por exemplo, após fazer o logout e tentar logar novamente.
         3. A precisão de cliks no ToolBar para abrir o Drawer Menu não é muito boa, em algums momentos é preciso clicak até três vezes para abrir o menu.
         4. A nível de implementação, é preciso conhecer muito bem os detalhes do framework para utilizar bem os recursos, pois ao implementar a persistência de mensagens foi preciso olhar o código fonte da classe DatabaseComponent para saber o nome do parâmetro do sinal 'itemLoaded' emitido após realizar uma consulta. Esse parâmetro contém os dados extraídos da consulta e era preciso acessá-lo para adicionar na view, isso é devido o fato do método 'select' ser assícrono, emitindo o resultado através de um evento.
-        5. O build do projeto é muito mais lento do que a versão sem o framework e o tamanho do arquivo final (apk) é pouco mais de 2MB maior.
+        5. O build do projeto é muito mais lento do que a versão sem o framework e o tamanho do arquivo final (apk) é em torno de 20% maior.
     - Na versão sem o framework:
         1. O click no botão "voltar" do android, não retorna para a página anterior ou minimiza o aplicativo quando somente uma página foi acessada pelo usuário, o ocorre é o fechamento inesperado do aplicativo. Na versão com o framework esse recurso já está implementado internamente.
         2. Não foi possível permitir que o usuário altere a imagem de perfil, selecionando uma imagem da galeria de arquivos do sistema, pois o QML não dispõe de um componente para acesso a galeria de imagens do dispositivo no android, sendo necessário implementar uma API em java ou C++ com JNI. Na versão com o framework esse recurso já está implementado e pode ser utilizado via procedure call.
 
-
 ## Alterações realizadas na versão com o framework (15):
-    1.  Realizado o clone do projeto da arquitetura para o computador utilizado, usando o link no github na página do projeto: https://github.com/joseneas/tcc
-    2.  Pasta do projeto foi renomeada de 'tcc' para 'Emile1'
-    3.  Arquivo do projeto 'tcc.pro' foi renomeado para 'Emile1.pro'
-    4.  Editado as strings no arquivo 'config.json' na raiz do projeto onde foi atualizado as propriedades 'applicationName', 'organizationName' e 'organizationDomain' para o nome do aplicativo
-    5.  Edtiado as propriedades de 'restService' no no arquivo 'config.json' na raiz do projeto
-    6.  Deletado os plugins 'About', 'AddPageDynamiccally' e 'Pages' disponibilizados como exemplo pois não seriam utilizados
-    7.  O arquivo 'Listeners/Listener1.qml' foi deletado, pois não seria utilizado
-    8.  Alterado o arquivo 'Listeners/config.json' foi modificado, removendo uma linha do arquivo
-    9.  Adicionado a pasta 'Messages' (plugin Messages) para implementação da feature de mensagens (exibição e envio)
-    10. Adicionado o arquivo 'config.json' na pasta do plugin 'Messages'
-    11. Adicionado os arquivos: 'CourseSectionSelectPage.qml', 'DestinationGroupSelectPage.qml', 'SendMessagesPage.qml', 'ViewMessagesPage.qml' e 'ViewMessagesPageDelegate.qml' no plugin Messages
-    12. Alterado o arquivo 'Messages/config.json' e adicionado as páginas visíveis do plugin, além da permissão do usuário requerida para cada página
-    13. Alterado a propriedade 'order' do plugin 'UserProfile' para o valor '5' para que a exibição da opḉão 'ProfileView' fique abaixo das opções de envio e visualização de mensagens
-    14. Removido as strings presente na propriedade 'roles' do plugin 'UserProfile' e mantido somente os valores 'teacher' e 'student'
-    15. Removido as strings presente na propriedade 'roles' do plugin 'Login' e mantido somente os valores 'teacher' e 'student'
+    1.  Foi realizado o clone do projeto da arquitetura para o computador utilizado no desenvolvimento, através do link no github na página do projeto.
+    2.  Em seguida, a pasta do projeto foi renomeada de 'tcc' para 'Emile1'.
+    3.  O arquivo de projeto Qt 'tcc.pro' foi renomeado para 'Emile1.pro'
+    4.  Foi feito edições das strings no arquivo 'config.json' que está na raiz do projeto, onde foram atualizados as propriedades 'applicationName', 'organizationName' e 'organizationDomain' para os valores referentes ao aplicativo.
+    5.  Editado as propriedades de 'restService' no arquivo 'config.json' na raiz do projeto, onde foi adicionado a url do serviço REST desenvolvido na avaliação, além do usuário e senha para uso da API REST.
+    6.  Foi deletado os plugins 'About', 'AddPageDynamiccally' e 'Pages' disponibilizados como exemplo pois não seriam utilizados.
+    7.  O arquivo 'Listeners/Listener1.qml' foi deletado, pois não seria utilizado.
+    8.  Alterado o arquivo 'Listeners/config.json', onde foi removido uma linha do arquivo.
+    9.  Adicionado a pasta 'Messages' (representando o plugin Messages) para implementação da feature de mensagens (exibição e envio).
+    10. Adicionado o arquivo 'config.json' na pasta do plugin 'Messages'.
+    11. Adicionado os arquivos: 'CourseSectionSelectPage.qml', 'DestinationGroupSelectPage.qml', 'SendMessagesPage.qml', 'ViewMessagesPage.qml', 'plugin_functions.js', 'plugin_table.sql' e 'ViewMessagesPageDelegate.qml' no plugin Messages.
+    12. Alterado o arquivo 'Messages/config.json' e adicionado as páginas visíveis do plugin, além da permissão do usuário (propriedade 'roles') requerida para cada página.
+    13. Alterado a propriedade 'order' do plugin 'UserProfile' para o valor '5' para que a exibição da opḉão 'Ver perfil' fique abaixo das opções de envio e visualização de mensagens.
+    14. Adicionado os arquivos 'LoadUserCourseSections' e 'LoadUserProgram' no plugin 'Login' para carregarem dados adicionais do usuário.
+    14. Removido as strings presente na propriedade 'roles' do plugin 'UserProfile' e mantido somente os valores 'teacher' e 'student'.
+    15. Removido as strings presente na propriedade 'roles' do plugin 'Login' e mantido somente os valores 'teacher' e 'student'.
+    16. Adicionado a logo do aplicativo na pasta assets (que está na raiz do projeto), substituindo o ícone fornecido como exemplo.
+    17. Editado o arquivo assets/qtquickcontrols2.conf onde foi alterado as cores do aplicativo, nas propriedades Accent, Primary, Foreground e Background.
